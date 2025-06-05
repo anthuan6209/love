@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gửi Em 💖</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffe6f0, #ffe0f7);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      color: #ff66a3;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .message-container {
+      height: 300px;
+      position: relative;
+    }
+    .message {
+      position: absolute;
+      width: 100%;
+      color: #555;
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0;
+      transition: all 1s ease;
+      transform: translateY(20px);
+    }
+    .message.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .heart {
+      font-size: 32px;
+      animation: pulse 1.2s infinite;
+      color: #ff4d88;
+      margin-top: 20px;
+    }
+    .floating-hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    .floating-heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff4d88;
+      animation: float linear;
+      pointer-events: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    @keyframes float {
+      to {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Gửi em bé đáng yêu của anh 💌</h1>
+    <div class="message-container" id="message-container"></div>
+    <div class="heart">❤</div>
+    <div class="floating-hearts" id="floating-hearts"></div>
+  </div>
+
+  <script>
+    // Cấu hình
+    const CONFIG = {
+      messages: [
+        "Anh yêu em rất nhiều!",
+        "Em là người đặc biệt nhất với anh ❤️",
+        "Mỗi ngày bên em là một món quà ngọt ngào",
+        "Dù em có dễ thương, khó chiều hay hơi bướng...",
+        "Thì anh vẫn luôn thương em nhất! 🥰",
+        "Em là mặt trời của đời anh 🌞",
+        "Anh muốn cùng em đi đến cuối con đường",
+        "Tình yêu của anh dành cho em là vô điều kiện",
+        "Em làm cuộc sống của anh trọn vẹn hơn",
+        "Anh sẽ luôn ở bên em, dù bất cứ chuyện gì xảy ra",
+"Nụ cười của em là động lực của anh",
+        "Anh không thể tưởng tượng cuộc sống thiếu em",
+        "Em là điều tuyệt vời nhất từng xảy đến với anh 💕"
+      ],
+      settings: {
+        messageChangeInterval: 3000,
+        heartAnimationSpeed: 1.2,
+        floatAnimationMin: 2,
+        floatAnimationMax: 5
+      }
+    };
+
+    // Khởi tạo
+    const messageContainer = document.getElementById('message-container');
+    const floatingHearts = document.getElementById('floating-hearts');
+    
+    // Tạo các message
+    CONFIG.messages.forEach((msg) => {
+      const messageElement = document.createElement('p');
+      messageElement.className = 'message';
+      messageElement.textContent = msg;
+      messageContainer.appendChild(messageElement);
+    });
+
+    // Hiệu ứng chuyển đổi message
+    let currentIndex = 0;
+    const allMessages = document.querySelectorAll('.message');
+    
+    function showNextMessage() {
+      allMessages.forEach(msg => msg.classList.remove('active'));
+      allMessages[currentIndex].classList.add('active');
+      currentIndex = (currentIndex + 1) % CONFIG.messages.length;
+      createFloatingHeart();
+    }
+
+    // Tạo trái tim bay
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerHTML = '❤';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = 
+        (Math.random() * (CONFIG.settings.floatAnimationMax - CONFIG.settings.floatAnimationMin) + 
+        CONFIG.settings.floatAnimationMin) + 's';
+      floatingHearts.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), CONFIG.settings.floatAnimationMax * 1000);
+    }
+
+    // Bắt đầu hiển thị
+    showNextMessage();
+    setInterval(showNextMessage, CONFIG.s
